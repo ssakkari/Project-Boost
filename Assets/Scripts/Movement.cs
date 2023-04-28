@@ -8,6 +8,9 @@ public class Movement : MonoBehaviour
     AudioSource audioSource;
     [SerializeField] float thrustMultiplier = 100f;
     [SerializeField] float rotateMultiplier = 1f;
+    [SerializeField] ParticleSystem mainEngineBooster;
+    [SerializeField] ParticleSystem leftBooster;
+    [SerializeField] ParticleSystem rightBooster;
 
     // Start is called before the first frame update
     void Start()
@@ -32,11 +35,16 @@ public class Movement : MonoBehaviour
             {
                 audioSource.Play();
             }
+            if(!mainEngineBooster.isPlaying)
+            {
+                mainEngineBooster.Play();
+            }
             rb.AddRelativeForce(Vector3.up * Time.deltaTime * thrustMultiplier);
         }
         else
         {
             audioSource.Stop();
+            mainEngineBooster.Stop();
         }
     }
 
@@ -46,10 +54,23 @@ public class Movement : MonoBehaviour
         if(Input.GetKey(KeyCode.LeftArrow))
         {
             RotationDirection(-rotateMultiplier);
+            if(!rightBooster.isPlaying)
+            {
+                rightBooster.Play();
+            }
         }
         else if(Input.GetKey(KeyCode.RightArrow))
         {
             RotationDirection(rotateMultiplier);
+            if(!leftBooster.isPlaying)
+            {
+                leftBooster.Play();
+            }
+        }
+        else
+        {
+            rightBooster.Stop();
+            leftBooster.Stop();
         }
     }
 
