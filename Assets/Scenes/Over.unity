@@ -244,8 +244,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7783678365907331502, guid: aaf3f7184ff7f5941bdb9e110d45d0a3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8073295911323010841, guid: aaf3f7184ff7f5941bdb9e110d45d0a3, type: 3}
       propertyPath: m_Name
+      value: Rocket
+      objectReference: {fileID: 0}
+    - target: {fileID: 8073295911323010841, guid: aaf3f7184ff7f5941bdb9e110d45d0a3, type: 3}
+      propertyPath: m_TagString
       value: Rocket
       objectReference: {fileID: 0}
     - target: {fileID: 8073295911323010917, guid: aaf3f7184ff7f5941bdb9e110d45d0a3, type: 3}

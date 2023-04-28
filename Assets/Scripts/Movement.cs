@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Movement : MonoBehaviour
     [SerializeField] ParticleSystem mainEngineBooster;
     [SerializeField] ParticleSystem leftBooster;
     [SerializeField] ParticleSystem rightBooster;
+    [SerializeField] float indexDelayMultiplier = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -24,8 +26,34 @@ public class Movement : MonoBehaviour
     {
         RocketThrust();
         RocketRotate();
+        SkipLevel();
+        TurnOffCollisions();
     }
 
+    // Disable Collisions
+    void TurnOffCollisions()
+    {
+        if(Input.GetKey(KeyCode.C))
+        {
+            if (GetComponent<CollisionHandler>().enabled == true)
+            {
+                GetComponent<CollisionHandler>().enabled = false;
+            }
+            else
+            {
+                GetComponent<CollisionHandler>().enabled = true;
+            }
+        }
+    }
+
+    // Skip level
+    void SkipLevel()
+    {
+        if(Input.GetKey(KeyCode.L))
+        {
+            Invoke ("NextStage", indexDelayMultiplier);
+        }
+    }
     // Thrust rocket forward using space
     void RocketThrust()
     {
@@ -79,5 +107,15 @@ public class Movement : MonoBehaviour
         rb.freezeRotation = false; // stop physics from interfering with manual rotation
         transform.Rotate(Vector3.forward * rM * Time.deltaTime);
         rb.freezeRotation = true; // restart physics once key is not pressed
+    }
+
+    void NextStage()
+    {
+        int nextBuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if(nextBuildIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            nextBuildIndex = 0;
+        }
+        SceneManager.LoadScene(nextBuildIndex);
     }
 }
